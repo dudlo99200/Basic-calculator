@@ -1,0 +1,60 @@
+import tkinter as tk  # Import the tkinter library for GUI
+
+# Function to handle button clicks
+def button_click(event):
+    # Get the text of the clicked button
+    text = event.widget.cget("text")
+    
+    # Handle special buttons
+    if text == "=":
+        try:
+            # Evaluate the expression in the input field
+            result = str(eval(input_field.get()))
+            input_field.delete(0, tk.END)  # Clear the input field
+            input_field.insert(0, result)  # Display the result
+        except Exception as e:
+            # Handle errors (e.g., invalid expressions)
+            input_field.delete(0, tk.END)
+            input_field.insert(0, "Error")
+    elif text == "C":
+        # Clear the input field
+        input_field.delete(0, tk.END)
+    else:
+        # Append the button's text to the input field
+        input_field.insert(tk.END, text)
+
+# Create the main window
+root = tk.Tk()
+root.title("Basic Calculator")  # Set the window title
+root.geometry("300x400")  # Set the window size
+
+# Create an input field
+input_field = tk.Entry(root, font=("Arial", 20), justify="right")
+input_field.pack(fill=tk.BOTH, padx=10, pady=10, ipady=10)  # Add padding and make it expandable
+
+# Create a frame for the buttons
+button_frame = tk.Frame(root)
+button_frame.pack()
+
+# List of buttons (layout of the calculator)
+buttons = [
+    "7", "8", "9", "/",
+    "4", "5", "6", "*",
+    "1", "2", "3", "-",
+    "C", "0", "=", "+"
+]
+
+# Add buttons to the frame
+for i, button_text in enumerate(buttons):
+    # Create a button
+    button = tk.Button(button_frame, text=button_text, font=("Arial", 18), relief="ridge", border=5)
+    button.grid(row=i // 4, column=i % 4, sticky="nsew", padx=5, pady=5)  # Arrange buttons in a grid
+    button.bind("<Button-1>", button_click)  # Bind the button click event
+
+# Configure the grid to make buttons expand evenly
+for i in range(4):
+    button_frame.grid_columnconfigure(i, weight=1)
+    button_frame.grid_rowconfigure(i, weight=1)
+
+# Run the main event loop
+root.mainloop()
