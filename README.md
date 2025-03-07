@@ -43,7 +43,7 @@ The script uses the `tkinter` library to create the GUI. Here's a brief overview
 
 ## Author
 
-[Your Name]
+MD Mahbub Islam
 
 ## License
 
